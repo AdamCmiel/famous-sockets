@@ -12,15 +12,15 @@ var ImageSurface = require('famous/surfaces/ImageSurface');
 var Transitionable = require('famous/transitions/Transitionable');
 
 var WeightedAverage = require('./WeightedAverage');
-var angle = new WeightedAverage(0, 5);
-var opacity = new WeightedAverage(1, 5);
+var angle = new WeightedAverage(0, 8);
+var opacity = new WeightedAverage(1, 8);
 
 var pr = new Transitionable(0);
 var o = new Transitionable(1);
 
 var _a, _o;
 
-var socket = io.connect("http://localhost:8888");
+var socket = io.connect("http://tall-adam.local:8888");
 socket.on('angle', function (_angle) {
     _a = 2 * _angle * Math.PI / 180;
     angle.pushValue(_a);
@@ -40,7 +40,7 @@ var mainContext = Engine.createContext();
 
 // your app here
 var logo = new ImageSurface({
-  size: [500, 500],
+  size: [200, 200],
   content: 'images/famous_logo.png',
   classes: ['backfaceVisibility']
 });
