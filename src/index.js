@@ -11,6 +11,9 @@ var Transform = require('famous/core/Transform');
 var ImageSurface = require('famous/surfaces/ImageSurface');
 var Transitionable = require('famous/transitions/Transitionable');
 
+var audio = require('./audio');
+audio.start();
+
 var WeightedAverage = require('./WeightedAverage');
 var angle = new WeightedAverage(0, 8);
 var opacity = new WeightedAverage(1, 8);
@@ -25,11 +28,13 @@ socket.on('angle', function (_angle) {
     _a = 2 * _angle * Math.PI / 180;
     angle.pushValue(_a);
     pr.set(angle.get());
+    audio.gain(angle.get() / Math.PI);
 });
 socket.on('opacity', function (_opacity) {
     _o = 1 - _opacity / 150;
     opacity.pushValue(_o);
     o.set(opacity.get());
+    audio.tune(opacity.get());
 });
 socket.on('disconnect', function () {
     alert('disconnected');
